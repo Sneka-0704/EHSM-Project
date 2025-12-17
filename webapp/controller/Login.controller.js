@@ -1,75 +1,90 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Controller, MessageToast, JSONModel, MessageBox, Filter, FilterOperator) {
+    "sap/m/MessageToast",
+    "sap/ui/core/BusyIndicator"
+], function (Controller, JSONModel, MessageBox, MessageToast, BusyIndicator) {
     "use strict";
 
     return Controller.extend("ehsm.controller.Login", {
+
         onInit: function () {
-            // Local model for login form
+            // Initialize login model
             var oLoginModel = new JSONModel({
-                user_id: "",
+                userId: "",
                 password: ""
             });
-            this.getView().setModel(oLoginModel, "loginForm");
-
-            // Bind the view inputs to this local model
-            this.byId("inpUserId").bindValue("loginForm>/user_id");
-            this.byId("inpPassword").bindValue("loginForm>/password");
+            this.getView().setModel(oLoginModel, "loginModel");
         },
 
         onLogin: function () {
-            var oModel = this.getOwnerComponent().getModel();
-            var oRouter = this.getOwnerComponent().getRouter();
-            var oLoginData = this.getView().getModel("loginForm").getData();
-            var sUserId = oLoginData.user_id;
-            var sPassword = oLoginData.password;
+            var oView = this.getView();
+            var oLoginModel = oView.getModel("loginModel");
+            var sUserId = oLoginModel.getProperty("/userId");
+            var sPassword = oLoginModel.getProperty("/password");
 
+            // Validate input
             if (!sUserId || !sPassword) {
-                MessageToast.show("Please enter both User ID and Password.");
+                MessageBox.error("Please enter both User ID and Password.");
                 return;
             }
 
             // Show busy indicator
-            sap.ui.core.BusyIndicator.show();
+            BusyIndicator.show(0);
 
-            // Read Z898_LOGIN entity set and filter by user_id and password
-            var sPath = "/Z898_LOGIN";
+            // Get OData model
+            var oDataModel = this.getOwnerComponent().getModel();
+
+            // Read login entity set with filters
             var aFilters = [
-                new Filter("user_id", FilterOperator.EQ, sUserId),
-                new Filter("password", FilterOperator.EQ, sPassword)
+                new sap.ui.model.Filter("user_id", sap.ui.model.FilterOperator.EQ, sUserId),
+                new sap.ui.model.Filter("password", sap.ui.model.FilterOperator.EQ, sPassword)
             ];
 
-            oModel.read(sPath, {
+            oDataModel.read("/Z898_LOGIN", {
                 filters: aFilters,
                 success: function (oData) {
-                    sap.ui.core.BusyIndicator.hide();
+                    BusyIndicator.hide();
 
-                    // Check if any results returned (successful login)
+                    // Check if credentials are valid
                     if (oData.results && oData.results.length > 0) {
-                        MessageToast.show("Login Successful");
+                        // Login successful
+                        var oSessionModel = this.getOwnerComponent().getModel("session");
+                        oSessionModel.setProperty("/userId", sUserId);
+                        oSessionModel.setProperty("/isLoggedIn", true);
 
-                        // Store session data
-                        var oSessionModel = new JSONModel({
-                            user_id: sUserId,
-                            IsLoggedIn: true
-                        });
-                        this.getOwnerComponent().setModel(oSessionModel, "session");
+                        MessageToast.show("Login successful! Welcome, " + sUserId);
+
+                        // Clear login form
+                        oLoginModel.setProperty("/userId", "");
+                        oLoginModel.setProperty("/password", "");
 
                         // Navigate to Dashboard
-                        oRouter.navTo("RouteDashboard");
+                        this.getOwnerComponent().getRouter().navTo("Dashboard");
                     } else {
-                        MessageBox.error("Login Failed: Invalid User ID or Password");
+                        // Login failed
+                        MessageBox.error("Invalid User ID or Password. Please try again.");
                     }
                 }.bind(this),
                 error: function (oError) {
-                    sap.ui.core.BusyIndicator.hide();
-                    MessageBox.error("System Error: Unable to login. Please check your connection.");
-                }
+                    BusyIndicator.hide();
+                    var sErrorMsg = "Login failed. Please check your credentials and try again.";
+
+                    // Try to parse error message
+                    if (oError.responseText) {
+                        try {
+                            var oErrorResponse = JSON.parse(oError.responseText);
+                            if (oErrorResponse.error && oErrorResponse.error.message && oErrorResponse.error.message.value) {
+                                sErrorMsg = oErrorResponse.error.message.value;
+                            }
+                        } catch (e) {
+                            // Use default error message
+                        }
+                    }
+
+                    MessageBox.error(sErrorMsg);
+                }.bind(this)
             });
         }
     });

@@ -1,26 +1,82 @@
-<mvc:View controllerName="ehsm.controller.Login"
+<mvc:View
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
     xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
-    <Page title="Safety Engineer Portal - Login" showHeader="true">
+    xmlns:core="sap.ui.core"
+    controllerName="ehsm.controller.Login"
+    displayBlock="true">
+    <Page
+        title="EHSM Safety Engineer Portal"
+        showNavButton="false"
+        enableScrolling="true"
+        class="sapUiResponsiveContentPadding">
         <content>
-            <FlexBox alignItems="Center" justifyContent="Center" height="100%" direction="Column">
-                <items>
-                    <Panel width="400px" headerText="Please Login" class="sapUiResponsiveMargin">
-                        <content>
-                            <VBox class="sapUiSmallMargin">
-                                <Label text="User ID" required="true"/>
-                                <Input id="inpUserId" placeholder="Enter User ID" value="{/user_id}"/>
-                                <Label text="Password" required="true"/>
-                                <Input id="inpPassword" placeholder="Enter Password" type="Password" value="{/password}"/>
-                                <Button text="Login" type="Emphasized" press="onLogin" class="sapUiSmallMarginTop" width="100%"/>
-                            </VBox>
-                        </content>
-                    </Panel>
-                </items>
-            </FlexBox>
+            <VBox
+                alignItems="Center"
+                justifyContent="Center"
+                class="sapUiMediumMarginTop">
+                
+                <!-- Login Card -->
+                <VBox
+                    width="400px"
+                    class="sapUiMediumMargin">
+                    
+                    <!-- Header -->
+                    <VBox
+                        alignItems="Center"
+                        class="sapUiSmallMarginBottom">
+                        <core:Icon
+                            src="sap-icon://shield"
+                            size="4rem"
+                            color="#0854A0"
+                            class="sapUiSmallMarginBottom" />
+                        <Title
+                            text="Safety Engineer Login"
+                            level="H2"
+                            class="sapUiSmallMarginBottom" />
+                        <Text
+                            text="Sign in to access the EHSM Portal"
+                            class="sapUiTinyMarginBottom" />
+                    </VBox>
+                    
+                    <!-- Login Form -->
+                    <VBox class="sapUiMediumMarginTop">
+                        <Label
+                            text="User ID"
+                            labelFor="userIdInput"
+                            required="true"
+                            class="sapUiTinyMarginTop" />
+                        <Input
+                            id="userIdInput"
+                            placeholder="Enter your User ID"
+                            value="{loginModel>/userId}"
+                            width="100%"
+                            class="sapUiTinyMarginBottom" />
+                        
+                        <Label
+                            text="Password"
+                            labelFor="passwordInput"
+                            required="true"
+                            class="sapUiTinyMarginTop" />
+                        <Input
+                            id="passwordInput"
+                            type="Password"
+                            placeholder="Enter your Password"
+                            value="{loginModel>/password}"
+                            width="100%"
+                            submit=".onLogin"
+                            class="sapUiTinyMarginBottom" />
+                        
+                        <Button
+                            text="Login"
+                            type="Emphasized"
+                            width="100%"
+                            press=".onLogin"
+                            icon="sap-icon://log"
+                            class="sapUiMediumMarginTop" />
+                    </VBox>
+                </VBox>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

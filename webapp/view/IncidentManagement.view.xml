@@ -1,44 +1,130 @@
-<mvc:View controllerName="ehsm.controller.IncidentManagement"
+<mvc:View
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <Page title="Incident Management" showNavButton="true" navButtonPress="onNavBack">
+    xmlns:core="sap.ui.core"
+    controllerName="ehsm.controller.IncidentManagement"
+    displayBlock="true">
+    <Page
+        title="Incident Management"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+        enableScrolling="true">
         <content>
-            <Table id="incidentTable" items="{/Z898_INCIDENT}" growing="true" growingThreshold="20" width="auto" class="sapUiResponsiveMargin">
-                <headerToolbar>
-                    <Toolbar>
-                        <Title text="Incidents Overview" level="H2"/>
-                        <ToolbarSpacer/>
-                        <SearchField placeholder="Search Incidents" width="30%"/>
-                    </Toolbar>
-                </headerToolbar>
-                <columns>
-                    <Column><Text text="Incident ID"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Title"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Category"/></Column>
-                    <Column><Text text="Status"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Group"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Plant ID"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Location"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Created On"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Created By"/></Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{IncidentID}"/>
-                            <Text text="{Title}"/>
-                            <Text text="{IncidentCategory}"/>
-                            <ObjectStatus text="{IncidentRecordStatus}" state="{path: 'IncidentRecordStatus', formatter: '.formatter.statusState'}"/>
-                            <Text text="{IncidentGroup}"/>
-                            <Text text="{PlantID}"/>
-                            <Text text="{Location}"/>
-                            <Text text="{path: 'CreatedOn', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"/>
-                            <Text text="{CreatedBy}"/>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
+            <VBox class="sapUiResponsiveContentPadding">
+                
+                <!-- Header Section -->
+                <VBox class="sapUiSmallMarginBottom">
+                    <Title text="Safety Incidents" level="H2" class="sapUiTinyMarginBottom" />
+                    <Text text="View and track all safety incidents" />
+                </VBox>
+
+                <!-- Incident Table -->
+                <Table
+                    id="incidentTable"
+                    inset="false"
+                    items="{
+                        path: '/Z898_INCIDENT',
+                        sorter: {
+                            path: 'CreatedOn',
+                            descending: true
+                        }
+                    }"
+                    growing="true"
+                    growingThreshold="20"
+                    mode="None"
+                    class="sapUiSmallMarginTop">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Incidents" level="H3" />
+                            <ToolbarSpacer />
+                            <Button
+                                icon="sap-icon://refresh"
+                                press=".onRefresh"
+                                tooltip="Refresh" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column
+                            width="10%"
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                            <Text text="Incident ID" />
+                        </Column>
+                        <Column
+                            width="15%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Title" />
+                        </Column>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Category" />
+                        </Column>
+                        <Column
+                            width="10%"
+                            minScreenWidth="Tablet"
+                            demandPopin="false"
+                            importance="High">
+                            <Text text="Status" />
+                        </Column>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Group" />
+                        </Column>
+                        <Column
+                            width="10%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Plant ID" />
+                        </Column>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Location" />
+                        </Column>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                            <Text text="Created On" />
+                        </Column>
+                        <Column
+                            width="10%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Created By" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{IncidentID}" />
+                                <Text text="{Title}" />
+                                <Text text="{IncidentCategory}" />
+                                <ObjectStatus
+                                    text="{IncidentRecordStatus}"
+                                    state="{
+                                        path: 'IncidentRecordStatus',
+                                        formatter: '.formatter.formatIncidentStatus'
+                                    }" />
+                                <Text text="{IncidentGroup}" />
+                                <Text text="{PlantID}" />
+                                <Text text="{Location}" />
+                                <Text text="{
+                                    path: 'CreatedOn',
+                                    formatter: '.formatter.formatDate'
+                                }" />
+                                <Text text="{CreatedBy}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

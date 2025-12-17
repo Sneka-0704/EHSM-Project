@@ -76,6 +76,9 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {}
+      },
+      "session": {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {
@@ -94,46 +97,55 @@
         "type": "View",
         "viewType": "XML",
         "path": "ehsm.view",
-        "async": true
+        "async": true,
+        "viewPath": "ehsm.view"
       },
       "routes": [
         {
-          "name": "RouteLogin",
+          "name": "Login",
           "pattern": "",
-          "target": "TargetLogin"
+          "target": [
+            "TargetLogin"
+          ]
         },
         {
-          "name": "RouteDashboard",
+          "name": "Dashboard",
           "pattern": "dashboard",
-          "target": "TargetDashboard"
+          "target": [
+            "TargetDashboard"
+          ]
         },
         {
-          "name": "RouteRisk",
-          "pattern": "risk",
-          "target": "TargetRisk"
+          "name": "IncidentManagement",
+          "pattern": "incident-management",
+          "target": [
+            "TargetIncidentManagement"
+          ]
         },
         {
-          "name": "RouteIncident",
-          "pattern": "incident",
-          "target": "TargetIncident"
+          "name": "RiskAssessment",
+          "pattern": "risk-assessment",
+          "target": [
+            "TargetRiskAssessment"
+          ]
         }
       ],
       "targets": {
         "TargetLogin": {
-          "viewName": "Login",
-          "viewLevel": 1
+          "id": "login",
+          "name": "Login"
         },
         "TargetDashboard": {
-          "viewName": "Dashboard",
-          "viewLevel": 2
+          "id": "dashboard",
+          "name": "Dashboard"
         },
-        "TargetRisk": {
-          "viewName": "RiskAssessment",
-          "viewLevel": 3
+        "TargetIncidentManagement": {
+          "id": "incidentManagement",
+          "name": "IncidentManagement"
         },
-        "TargetIncident": {
-          "viewName": "IncidentManagement",
-          "viewLevel": 3
+        "TargetRiskAssessment": {
+          "id": "riskAssessment",
+          "name": "RiskAssessment"
         }
       }
     },

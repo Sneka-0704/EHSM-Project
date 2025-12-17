@@ -1,33 +1,47 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, MessageToast, JSONModel) {
+    "sap/m/MessageToast"
+], function (Controller, MessageToast) {
     "use strict";
 
     return Controller.extend("ehsm.controller.Dashboard", {
+
         onInit: function () {
             // Check if user is logged in
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.getRoute("Dashboard").attachPatternMatched(this._onRouteMatched, this);
+        },
+
+        _onRouteMatched: function () {
+            // Verify user is logged in
             var oSessionModel = this.getOwnerComponent().getModel("session");
-            if (!oSessionModel || !oSessionModel.getProperty("/IsLoggedIn")) {
-                // If not logged in, redirect to login
-                this.getOwnerComponent().getRouter().navTo("RouteLogin");
+            var bIsLoggedIn = oSessionModel.getProperty("/isLoggedIn");
+
+            if (!bIsLoggedIn) {
+                // Redirect to login if not logged in
+                MessageToast.show("Please login to access the dashboard");
+                this.getOwnerComponent().getRouter().navTo("Login");
             }
         },
 
-        onPressRisk: function () {
-            this.getOwnerComponent().getRouter().navTo("RouteRisk");
+        onNavigateToRiskAssessment: function () {
+            this.getOwnerComponent().getRouter().navTo("RiskAssessment");
         },
 
-        onPressIncident: function () {
-            this.getOwnerComponent().getRouter().navTo("RouteIncident");
+        onNavigateToIncidentManagement: function () {
+            this.getOwnerComponent().getRouter().navTo("IncidentManagement");
         },
 
         onLogout: function () {
             // Clear session
-            this.getOwnerComponent().setModel(new JSONModel({}), "session");
+            var oSessionModel = this.getOwnerComponent().getModel("session");
+            oSessionModel.setProperty("/userId", "");
+            oSessionModel.setProperty("/isLoggedIn", false);
+
             MessageToast.show("Logged out successfully");
-            this.getOwnerComponent().getRouter().navTo("RouteLogin");
+
+            // Navigate to login
+            this.getOwnerComponent().getRouter().navTo("Login");
         }
     });
 });

@@ -1,40 +1,115 @@
-<mvc:View controllerName="ehsm.controller.RiskAssessment"
+<mvc:View
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <Page title="Risk Assessment" showNavButton="true" navButtonPress="onNavBack">
+    xmlns:core="sap.ui.core"
+    controllerName="ehsm.controller.RiskAssessment"
+    displayBlock="true">
+    <Page
+        title="Risk Assessment"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+        enableScrolling="true">
         <content>
-            <Table id="riskTable" items="{/Z898_RISK}" growing="true" growingThreshold="20" width="auto" class="sapUiResponsiveMargin">
-                <headerToolbar>
-                    <Toolbar>
-                        <Title text="Risks Overview" level="H2"/>
-                        <ToolbarSpacer/>
-                        <SearchField placeholder="Search Risks" width="30%"/>
-                    </Toolbar>
-                </headerToolbar>
-                <columns>
-                    <Column><Text text="Risk Key Ref"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Team Member"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Role"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Regulation"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Regulation URL"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Created On"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Created By"/></Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{RiskKeyRef}"/>
-                            <Text text="{TeamMember}"/>
-                            <Text text="{Role}"/>
-                            <Text text="{Regulation}"/>
-                            <Link text="{RegulationURL}" href="{RegulationURL}" target="_blank"/>
-                            <Text text="{path: 'CreatedOn', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"/>
-                            <Text text="{CreatedBy}"/>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
+            <VBox class="sapUiResponsiveContentPadding">
+                
+                <!-- Header Section -->
+                <VBox class="sapUiSmallMarginBottom">
+                    <Title text="Risk Assessments" level="H2" class="sapUiTinyMarginBottom" />
+                    <Text text="View and manage safety risk assessments" />
+                </VBox>
+
+                <!-- Risk Assessment Table -->
+                <Table
+                    id="riskTable"
+                    inset="false"
+                    items="{
+                        path: '/Z898_RISK',
+                        sorter: {
+                            path: 'CreatedOn',
+                            descending: true
+                        }
+                    }"
+                    growing="true"
+                    growingThreshold="20"
+                    mode="None"
+                    class="sapUiSmallMarginTop">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Risk Assessments" level="H3" />
+                            <ToolbarSpacer />
+                            <Button
+                                icon="sap-icon://refresh"
+                                press=".onRefresh"
+                                tooltip="Refresh" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Tablet"
+                            demandPopin="false"
+                            importance="High">
+                            <Text text="Risk Key Ref" />
+                        </Column>
+                        <Column
+                            width="15%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Team Member" />
+                        </Column>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Role" />
+                        </Column>
+                        <Column
+                            width="15%"
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                            <Text text="Regulation" />
+                        </Column>
+                        <Column
+                            width="15%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Regulation URL" />
+                        </Column>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Tablet"
+                            demandPopin="true">
+                            <Text text="Created On" />
+                        </Column>
+                        <Column
+                            width="12%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true">
+                            <Text text="Created By" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{RiskKeyRef}" />
+                                <Text text="{TeamMember}" />
+                                <Text text="{Role}" />
+                                <Text text="{Regulation}" />
+                                <Link
+                                    text="{RegulationURL}"
+                                    href="{RegulationURL}"
+                                    target="_blank"
+                                    enabled="{= ${RegulationURL} !== '' }" />
+                                <Text text="{
+                                    path: 'CreatedOn',
+                                    formatter: '.formatter.formatDate'
+                                }" />
+                                <Text text="{CreatedBy}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

@@ -1,36 +1,84 @@
-<mvc:View controllerName="ehsm.controller.Dashboard"
+<mvc:View
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:core="sap.ui.core">
-    <Page title="Safety Engineer Portal - Dashboard" showNavButton="false">
-        <headerContent>
-            <Button icon="sap-icon://log" text="Logout" press="onLogout" type="Transparent"/>
-        </headerContent>
+    xmlns:core="sap.ui.core"
+    controllerName="ehsm.controller.Dashboard"
+    displayBlock="true">
+    <Page
+        title="Safety Engineer Dashboard"
+        showNavButton="false"
+        enableScrolling="true">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="Safety Engineer Dashboard" level="H1" />
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        text="Logout"
+                        icon="sap-icon://log"
+                        press=".onLogout"
+                        type="Transparent" />
+                </contentRight>
+            </Bar>
+        </customHeader>
         <content>
-            <FlexBox alignItems="Center" justifyContent="Center" wrap="Wrap" class="sapUiLargeMargin">
-                <items>
-                    <GenericTile class="sapUiMediumMargin" header="Risk Assessment" subheader="Manage Safety Risks" press="onPressRisk">
-                        <tileContent>
-                            <TileContent footer="Monitor Risks">
-                                <content>
-                                    <ImageContent src="sap-icon://alert" />
-                                </content>
-                            </TileContent>
-                        </tileContent>
-                    </GenericTile>
+            <VBox class="sapUiResponsiveContentPadding">
+                
+                <!-- Welcome Message -->
+                <VBox class="sapUiMediumMarginBottom" alignItems="Center">
+                    <Title
+                        text="Welcome, {session>/userId}"
+                        level="H2"
+                        class="sapUiSmallMarginBottom" />
+                    <Text
+                        text="Environment, Health &amp; Safety Management Portal"
+                        class="sapUiTinyMarginBottom" />
+                </VBox>
+
+                <!-- Navigation Tiles -->
+                <FlexBox
+                    wrap="Wrap"
+                    justifyContent="Center"
+                    alignItems="Center"
+                    class="sapUiMediumMarginTop">
                     
-                    <GenericTile class="sapUiMediumMargin" header="Incident Management" subheader="Report &amp; Track" press="onPressIncident">
-                        <tileContent>
-                            <TileContent footer="Track Incidents">
-                                <content>
-                                    <ImageContent src="sap-icon://incident" />
-                                </content>
+                    <!-- Risk Assessment Tile -->
+                    <VBox
+                        width="300px"
+                        class="sapUiMediumMargin">
+                        <GenericTile
+                            header="Risk Assessment"
+                            subheader="View and manage risk assessments"
+                            press=".onNavigateToRiskAssessment"
+                            class="sapUiTinyMarginBottom">
+                            <TileContent>
+                                <ImageContent src="sap-icon://warning2" />
                             </TileContent>
-                        </tileContent>
-                    </GenericTile>
-                </items>
-            </FlexBox>
+                        </GenericTile>
+                    </VBox>
+
+                    <!-- Incident Management Tile -->
+                    <VBox
+                        width="300px"
+                        class="sapUiMediumMargin">
+                        <GenericTile
+                            header="Incident Management"
+                            subheader="Track and manage safety incidents"
+                            press=".onNavigateToIncidentManagement"
+                            class="sapUiTinyMarginBottom">
+                            <TileContent>
+                                <ImageContent src="sap-icon://alert" />
+                            </TileContent>
+                        </GenericTile>
+                    </VBox>
+                </FlexBox>
+
+                <!-- Quick Info Section -->
+                <VBox class="sapUiLargeMarginTop" alignItems="Center">
+                    <Text text="Select a tile to navigate to the respective module" class="sapUiTinyText" />
+                </VBox>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

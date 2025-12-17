@@ -19,6 +19,13 @@ sap.ui.define([
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
 
+            // initialize session model
+            var oSessionModel = new sap.ui.model.json.JSONModel({
+                userId: "",
+                isLoggedIn: false
+            });
+            this.setModel(oSessionModel, "session");
+
             // enable routing
             this.getRouter().initialize();
         }
