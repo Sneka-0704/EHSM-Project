@@ -7,23 +7,14 @@ sap.ui.define([
     return Controller.extend("ehsm.controller.IncidentManagement", {
         formatter: {
             statusState: function (sStatus) {
-                if (sStatus === "Closed" || sStatus === "Resolved") {
+                if (sStatus === "CLOSED") {
                     return "Success";
-                } else if (sStatus === "Open" || sStatus === "New") {
+                } else if (sStatus === "OPEN") {
                     return "Error";
-                } else if (sStatus === "In Progress") {
+                } else if (sStatus === "IN_PROGRESS" || sStatus === "In Progress") {
                     return "Warning";
                 } else {
                     return "None";
-                }
-            },
-            priorityState: function (sPriority) {
-                if (sPriority === "High" || sPriority === "Critical") {
-                    return "Error";
-                } else if (sPriority === "Medium") {
-                    return "Warning";
-                } else {
-                    return "Success";
                 }
             }
         },

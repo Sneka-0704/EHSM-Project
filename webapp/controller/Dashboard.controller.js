@@ -10,7 +10,7 @@ sap.ui.define([
             // Check if user is logged in
             var oSessionModel = this.getOwnerComponent().getModel("session");
             if (!oSessionModel || !oSessionModel.getProperty("/IsLoggedIn")) {
-                // If not logged in, redirect to login (optional, but good for direct URL access)
+                // If not logged in, redirect to login
                 this.getOwnerComponent().getRouter().navTo("RouteLogin");
             }
         },

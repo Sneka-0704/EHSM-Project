@@ -13,27 +13,23 @@
                     </Toolbar>
                 </headerToolbar>
                 <columns>
-                    <Column><Text text="Risk ID"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Plant"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Description"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Category"/></Column>
-                    <Column><Text text="Severity"/></Column>
-                    <Column><Text text="Likelihood"/></Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Mitigation"/></Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Date"/></Column>
+                    <Column><Text text="Risk Key Ref"/></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Team Member"/></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Role"/></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Regulation"/></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Regulation URL"/></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Created On"/></Column>
                     <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Created By"/></Column>
                 </columns>
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <Text text="{RiskId}"/>
-                            <Text text="{Plant}"/>
-                            <Text text="{RiskDescription}"/>
-                            <Text text="{RiskCategory}"/>
-                            <ObjectStatus text="{RiskSeverity}" state="{path: 'RiskSeverity', formatter: '.formatter.severityState'}"/>
-                            <Text text="{Likelihood}"/>
-                            <Text text="{MitigationMeasures}"/>
-                            <Text text="{path: 'RiskIdentificationDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"/>
+                            <Text text="{RiskKeyRef}"/>
+                            <Text text="{TeamMember}"/>
+                            <Text text="{Role}"/>
+                            <Text text="{Regulation}"/>
+                            <Link text="{RegulationURL}" href="{RegulationURL}" target="_blank"/>
+                            <Text text="{path: 'CreatedOn', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"/>
                             <Text text="{CreatedBy}"/>
                         </cells>
                     </ColumnListItem>

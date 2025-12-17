@@ -11,10 +11,10 @@
                     <Panel width="400px" headerText="Please Login" class="sapUiResponsiveMargin">
                         <content>
                             <VBox class="sapUiSmallMargin">
-                                <Label text="Employee ID" required="true"/>
-                                <Input id="inpEmployeeId" placeholder="Enter Employee ID" value="{/EmployeeId}"/>
+                                <Label text="User ID" required="true"/>
+                                <Input id="inpUserId" placeholder="Enter User ID" value="{/user_id}"/>
                                 <Label text="Password" required="true"/>
-                                <Input id="inpPassword" placeholder="Enter Password" type="Password" value="{/Password}"/>
+                                <Input id="inpPassword" placeholder="Enter Password" type="Password" value="{/password}"/>
                                 <Button text="Login" type="Emphasized" press="onLogin" class="sapUiSmallMarginTop" width="100%"/>
                             </VBox>
                         </content>
