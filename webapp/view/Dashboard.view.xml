@@ -1,0 +1,36 @@
+<mvc:View controllerName="ehsm.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+    <Page title="Safety Engineer Portal - Dashboard" showNavButton="false">
+        <headerContent>
+            <Button icon="sap-icon://log" text="Logout" press="onLogout" type="Transparent"/>
+        </headerContent>
+        <content>
+            <FlexBox alignItems="Center" justifyContent="Center" wrap="Wrap" class="sapUiLargeMargin">
+                <items>
+                    <GenericTile class="sapUiMediumMargin" header="Risk Assessment" subheader="Manage Safety Risks" press="onPressRisk">
+                        <tileContent>
+                            <TileContent footer="Monitor Risks">
+                                <content>
+                                    <ImageContent src="sap-icon://alert" />
+                                </content>
+                            </TileContent>
+                        </tileContent>
+                    </GenericTile>
+                    
+                    <GenericTile class="sapUiMediumMargin" header="Incident Management" subheader="Report &amp; Track" press="onPressIncident">
+                        <tileContent>
+                            <TileContent footer="Track Incidents">
+                                <content>
+                                    <ImageContent src="sap-icon://incident" />
+                                </content>
+                            </TileContent>
+                        </tileContent>
+                    </GenericTile>
+                </items>
+            </FlexBox>
+        </content>
+    </Page>
+</mvc:View>

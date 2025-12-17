@@ -1,10 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller"
-], (Controller) => {
+], function (Controller) {
     "use strict";
 
-    return Controller.extend("ehsm.controller.app", {
-        onInit() {
+    return Controller.extend("ehsm.controller.App", {
+        onInit: function () {
         }
     });
 });

@@ -1,0 +1,44 @@
+<mvc:View controllerName="ehsm.controller.RiskAssessment"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page title="Risk Assessment" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <Table id="riskTable" items="{/Z898_RISK}" growing="true" growingThreshold="20" width="auto" class="sapUiResponsiveMargin">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Risks Overview" level="H2"/>
+                        <ToolbarSpacer/>
+                        <SearchField placeholder="Search Risks" width="30%"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="Risk ID"/></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Plant"/></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Description"/></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Category"/></Column>
+                    <Column><Text text="Severity"/></Column>
+                    <Column><Text text="Likelihood"/></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Mitigation"/></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Date"/></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Created By"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{RiskId}"/>
+                            <Text text="{Plant}"/>
+                            <Text text="{RiskDescription}"/>
+                            <Text text="{RiskCategory}"/>
+                            <ObjectStatus text="{RiskSeverity}" state="{path: 'RiskSeverity', formatter: '.formatter.severityState'}"/>
+                            <Text text="{Likelihood}"/>
+                            <Text text="{MitigationMeasures}"/>
+                            <Text text="{path: 'RiskIdentificationDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"/>
+                            <Text text="{CreatedBy}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

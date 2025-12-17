@@ -94,22 +94,46 @@
         "type": "View",
         "viewType": "XML",
         "path": "ehsm.view",
-        "async": true,
-        "viewPath": "ehsm.view"
+        "async": true
       },
       "routes": [
         {
-          "name": "Routeapp",
-          "pattern": ":?query:",
-          "target": [
-            "Targetapp"
-          ]
+          "name": "RouteLogin",
+          "pattern": "",
+          "target": "TargetLogin"
+        },
+        {
+          "name": "RouteDashboard",
+          "pattern": "dashboard",
+          "target": "TargetDashboard"
+        },
+        {
+          "name": "RouteRisk",
+          "pattern": "risk",
+          "target": "TargetRisk"
+        },
+        {
+          "name": "RouteIncident",
+          "pattern": "incident",
+          "target": "TargetIncident"
         }
       ],
       "targets": {
-        "Targetapp": {
-          "id": "app",
-          "name": "app"
+        "TargetLogin": {
+          "viewName": "Login",
+          "viewLevel": 1
+        },
+        "TargetDashboard": {
+          "viewName": "Dashboard",
+          "viewLevel": 2
+        },
+        "TargetRisk": {
+          "viewName": "RiskAssessment",
+          "viewLevel": 3
+        },
+        "TargetIncident": {
+          "viewName": "IncidentManagement",
+          "viewLevel": 3
         }
       }
     },
